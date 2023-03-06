@@ -20,9 +20,11 @@ from rest_framework import routers
 
 from apps.users.views import UserDetail, RegisterUserAPIView, CustomAuthToken
 from apps.projectsapp.views import ProjectViewSet
+from apps.leadsapp.views import LeadViewSet
 
 router = routers.DefaultRouter()
 router.register(r'projects', ProjectViewSet)
+router.register(r'leads', LeadViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
