@@ -14,3 +14,9 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        user_id = self.request.query_params.get('userid', None)
+        if user_id is not None:
+            return Project.objects.filter(user=user_id)
+        return self.queryset
