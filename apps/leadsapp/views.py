@@ -1,15 +1,16 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
+from apps.users.permissions import IsLeadOwnerOrReadOnly
 
 from .models import Lead
 from .serializers import LeadSerializer
-
-from apps.users.permissions import IsLeadOwnerOrReadOnly
 
 
 class LeadViewSet(viewsets.ModelViewSet):
     queryset = Lead.objects.all()
     serializer_class = LeadSerializer
-    permission_classes = (IsLeadOwnerOrReadOnly, )
+    permission_classes = (IsAuthenticatedOrReadOnly, IsLeadOwnerOrReadOnly)
 
     def get_queryset(self):
         project_id = self.request.query_params.get('projectid', None)
